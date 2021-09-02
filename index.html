@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<title>Shohag</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+<body ng-app="myApp" ng-controller="myCtrl">
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-analytics.js";
+        // TODO: Add SDKs for Firebase products that you want to use
+        // https://firebase.google.com/docs/web/setup#available-libraries
+      
+        // Your web app's Firebase configuration
+        // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+        const firebaseConfig = {
+          apiKey: "AIzaSyAXzhrziSY-BP3DezKS-OYtcE8RO9Mu5ps",
+          authDomain: "my-chat-app-8b749.firebaseapp.com",
+          projectId: "my-chat-app-8b749",
+          storageBucket: "my-chat-app-8b749.appspot.com",
+          messagingSenderId: "418049749262",
+          appId: "1:418049749262:web:e2cd242f60d13d0580e75f",
+          measurementId: "G-6M1JWSTCZS"
+        };
+      
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const analytics = getAnalytics(app);
+      </script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/angularFire/2.3.0/angularfire.min.js" integrity="sha512-8ZDKhABrbEX/eIybbe5W4gM3qP6ABDDHrb9c/+HoqI6jT3vDIxmNSlEsw1DBd/J/dmLDs5Ueg2WWYLqpq0/U8A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/angularFire/2.3.0/angularfire.js" integrity="sha512-CGaGlHPB7Xanygb/+2HxP/IrBmuqAMTbk89jZ6LFeVxNXaXdyMy6dK+ArvEATD+8bRZV3wV7DuDUAxB9Owf0qg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<div class="w3-container w3-teal">
+    
+  <h1><img class="w3-round-xxlarge" height="50" src="https://www.w3schools.com/w3css/img_avatar3.png" alt="Person"> Shohag</h1>
+
+</div>
+
+<div class="w3-panel">
+   
+    <ul id="list" class="w3-ul">
+        <li ng-repeat="n in names" class="w3-blue w3-panel w3-padding-16 w3-round-xxlarge">{{n.$value}}</li>
+    </ul>
+  </div>
+  <form onsubmit="send(event)" class="w3-panel">
+    <input id="msg" class="w3-input" placeholder="Write.." type="text">
+</form>
+<script>
+    var db = firebase.database().ref();
+    var app = angular.module('myApp', ['firebase']);
+    app.controller('myCtrl', function($scope, $firebaseArray) {
+    $scope.names=$firebaseArray(db.child('messages'));
+    });
+
+    var list = document.getElementById('list');
+    function send(e){
+    e.preventDefault();
+    var msg = document.getElementById('msg');
+    db.child('messages').push(msg.value);
+    msg.value='';
+    }
+</script>
+</body>
+</html> 
